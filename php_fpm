@@ -1,0 +1,18 @@
+# Sets up the host to use php with fpm.
+
+# set the index
+index index.php index.html index.html;
+
+# make sure people cannot try and transverse your site to get ot php files outside the  root
+location ~ \..*/.*\.php$ {
+    return 403;
+}
+
+# Pass the PHP files to PHP FastCGI for processing
+location ~ \.php(.*)$ {
+    try_files $uri = 404;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_index index.php;
+}

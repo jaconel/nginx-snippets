@@ -1,0 +1,4 @@
+# Deny Any Access to .htaccess Files That May Be Present (not usually in issue in Laravel)
+location ~ /\.ht {
+    deny all;
+}
